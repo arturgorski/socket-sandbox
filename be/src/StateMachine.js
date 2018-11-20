@@ -1,22 +1,27 @@
-const { WARM_UP } = require('./messages');
+const { WARM_UP, RESULTS } = require('./messages');
 
 const friends = require('./friends');
 
 const STATE_WARM_UP = 'warmUp';
 const STATE_QUIZ = 'quiz';
+const STATE_QUIZ_ENDED = 'quiz_ended';
 const WARM_UP_INTERVAL = 1000;
 const QUESTION_TIMEOUT_SECONDS = 10;
 
 class StateMachine {
-    constructor(io, uc, qp, qc) {
+    constructor(io, uc, qp, qc, qr) {
         this.io = io;
         this.usersCollection = uc;
         this.quizParticipants = qp;
         this.warmupTimer = null;
         this.quizController = qc;
+        this.quizRank = qr;
     }
 
     warmup(delaySeconds) {
+        this.quizRank.reset();
+        this.quizParticipants.reset();
+
         this.currentState = STATE_WARM_UP;
         const startTime = Math.round(new Date().getTime() / 1000) + parseInt(delaySeconds, 10);
 
@@ -60,7 +65,28 @@ class StateMachine {
     quiz() {
         if (this.currentState === WARM_UP) {
             this.currentState = STATE_QUIZ;
-            this.quizController.start(QUESTION_TIMEOUT_SECONDS);
+            this.quizController.start(QUESTION_TIMEOUT_SECONDS, () => {
+                clearInterval(this.warmupTimer);
+                this.currentState = STATE_QUIZ_ENDED;
+                const results = this.quizRank.getResults();
+
+                console.log('Quiz has ended');
+                console.log('Results: ', results);
+
+                Object.keys(this.quizParticipants.participants)
+                    .forEach(userId => {
+                        const customizedResults = results.map(userResult => Object.assign(
+                            {
+                                isFriend: this.usersCollection.hasFriends(userId) && this.usersCollection.hasFriends(userResult.id),
+                            },
+                            userResult
+                        ));
+
+                        this.io.to(userId).emit(RESULTS, { users: customizedResults });
+
+                        console.log('Personalised results for user with Id: ', userId, customizedResults);
+                    })
+            });
         }
     }
 

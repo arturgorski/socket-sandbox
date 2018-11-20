@@ -36,6 +36,10 @@ class App extends Component {
         this.socket.on('question', (data) => {
             console.log('>> New warm up message: ', data);
         });
+
+        this.socket.on('results', (data) => {
+            console.log('>> Results: ', data);
+        });
     };
 
     join = () => {

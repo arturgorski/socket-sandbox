@@ -10,8 +10,8 @@ class QuizRank {
     getResults() {
         const results = Object.keys(this.results)
             .map(userId => ({
-                userId,
-                userName: this.results[userId].userName,
+                id: userId,
+                name: this.results[userId].userName,
                 points: this.results[userId].points,
                 totalTimeMs: this.results[userId].totalTimeMs,
             }));

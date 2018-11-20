@@ -5,6 +5,10 @@ class QuizParticipants {
         this.participants = {};
     }
 
+    reset() {
+        this.participants = {};
+    }
+
     join(userId) {
         this.participants[userId] = true;
     }

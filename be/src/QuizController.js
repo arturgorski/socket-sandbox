@@ -34,7 +34,7 @@ class QuizController {
                 answer: '1996',
                 isCorrect: false,
             }]
-        }, {
+        }, /*{
             question: 'In what position did the current German coach Joachim Loew play in the German national team?\n',
             answers: [{
                 answer: 'Defender',
@@ -94,17 +94,19 @@ class QuizController {
                 answer: '5',
                 isCorrect: false,
             }]
-        }]
+        }*/
+        ]
     }
 
-    start(timePerQuestionSeconds) {
+    start(timePerQuestionSeconds, onQuizEnd) {
         this.nextQuestion = 0;
-        this.next(timePerQuestionSeconds);
+        this.next(timePerQuestionSeconds, onQuizEnd);
     }
 
-    next(timePerQuestionSeconds) {
+    next(timePerQuestionSeconds, onQuizEnd) {
         const question = this.questions[this.nextQuestion];
         if (!question) {
+            onQuizEnd();
             return;
         }
 
@@ -119,8 +121,8 @@ class QuizController {
         this.nextQuestion++;
 
         setTimeout(() => {
-            this.next(timePerQuestionSeconds);
-        }, (timePerQuestionSeconds + 3) * 1000);
+            this.next(timePerQuestionSeconds, onQuizEnd);
+        }, (timePerQuestionSeconds + 1) * 1000);
     }
 }
 

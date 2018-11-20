@@ -23,8 +23,8 @@ const users = [
 const uc = new UsersCollection();
 const qp = new QuizParticipants();
 const qc = new QuizController(io);
-const sm = new StateMachine(io, uc, qp, qc);
 const qr = new QuizRank();
+const sm = new StateMachine(io, uc, qp, qc, qr);
 
 let index = 0;
 
