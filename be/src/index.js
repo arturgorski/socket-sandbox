@@ -34,7 +34,7 @@ io.on('connection', function (socket) {
     const userName = users[index++];
     const connectionId = socket.id;
 
-    uc.connect(userId, connectionId, 'name');
+    uc.connect(userId, connectionId, userName);
     socket.join(userId);
 
     socket.on('disconnect', () => {

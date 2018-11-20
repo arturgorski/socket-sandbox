@@ -1,3 +1,5 @@
+const friends = require('./friends');
+
 class UsersCollection {
     constructor() {
         this.users = {};
@@ -18,6 +20,14 @@ class UsersCollection {
 
     isConnected(userId) {
         return this.users[userId] !== undefined;
+    }
+
+    getUserById(userId) {
+        return this.users[userId];
+    }
+
+    hasFriends(userId) {
+        return friends.includes(userId);
     }
 
     disconnect(userId, connectionId) {

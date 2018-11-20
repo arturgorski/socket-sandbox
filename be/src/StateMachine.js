@@ -1,8 +1,10 @@
 const { WARM_UP } = require('./messages');
 
+const friends = require('./friends');
+
 const STATE_WARM_UP = 'warmUp';
 const STATE_QUIZ = 'quiz';
-const WARM_UP_INTERVAL = 200;
+const WARM_UP_INTERVAL = 1000;
 const QUESTION_TIMEOUT_SECONDS = 10;
 
 class StateMachine {
@@ -29,17 +31,29 @@ class StateMachine {
             }
 
             // console.log(timeLeft);
-            Object.keys(this.usersCollection.users).forEach((userId) => {
-                if (!this.quizParticipants.participants[userId]) {
+            Object.keys(this.usersCollection.users)
+                .forEach((userId) => {
+                    let friendsList = [];
+
+                    if (this.usersCollection.hasFriends(userId)) {
+                        const usersFriends = friends.filter(friendId => friendId !== userId);
+                        friendsList = usersFriends
+                            .filter(friendId => this.quizParticipants.isParticipant(friendId))
+                            .map(friendId => ({
+                                id: friendId,
+                                name: this.usersCollection.getUserById(friendId).userName
+                            }))
+
+                    }
+
                     this.io.to(userId).emit(WARM_UP, {
                         timeLeft,
                         playersCount: this.quizParticipants.count(),
                         name: 'Fuck yeah!',
                         id: '123',
-                        friends: [],
+                        friends: friendsList,
                     });
-                }
-            });
+                });
         }, WARM_UP_INTERVAL)
     }
 

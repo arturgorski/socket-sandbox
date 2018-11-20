@@ -13,6 +13,10 @@ class QuizParticipants {
         delete this.participants[userId];
     }
 
+    isParticipant(userId) {
+        return !!this.participants[userId];
+    }
+
     count() {
         return _.size(this.participants);
     }
