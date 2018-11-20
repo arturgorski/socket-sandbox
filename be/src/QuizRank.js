@@ -13,10 +13,10 @@ class QuizRank {
                 id: userId,
                 name: this.results[userId].userName,
                 points: this.results[userId].points,
-                totalTimeMs: this.results[userId].totalTimeMs,
+                totalTime: this.results[userId].totalTime,
             }));
 
-        return results.sort((a, b) => a.points !== b.points ? b.points - a.points : a.totalTimeMs - b.totalTimeMs);
+        return results.sort((a, b) => a.points !== b.points ? b.points - a.points : a.totalTime - b.totalTime);
     }
 
     validAnswer(userId, userName, points, timeMs) {
@@ -24,11 +24,11 @@ class QuizRank {
             this.results[userId] = {
                 userName,
                 points: 0,
-                totalTimeMs: 0,
+                totalTime: 0,
             }
         }
 
-        this.results[userId].totalTimeMs += timeMs;
+        this.results[userId].totalTime += timeMs;
         this.results[userId].points += points;
     }
 }
