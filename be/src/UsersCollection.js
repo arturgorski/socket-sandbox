@@ -16,6 +16,10 @@ class UsersCollection {
         }
     }
 
+    isConnected(userId) {
+        return this.users[userId] !== undefined;
+    }
+
     disconnect(userId, connectionId) {
         if (this.users[userId]['connections'].length > 1) {
             this.users[userId]['connections'] = this.users[userId]['connections']

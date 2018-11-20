@@ -1,13 +1,18 @@
 const { WARM_UP } = require('./messages');
+const QuizController = require('./QuizController');
 
 const STATE_WARM_UP = 'warmUp';
+const STATE_QUIZ = 'quiz';
+const WARM_UP_INTERVAL = 200;
+
 
 class StateMachine {
-    constructor(io, uc, qp) {
+    constructor(io, uc, qp, qc) {
         this.io = io;
         this.usersCollection = uc;
         this.quizParticipants = qp;
         this.warmupTimer = null;
+        this.quizController = qc;
     }
 
     warmup(delaySeconds) {
@@ -20,19 +25,31 @@ class StateMachine {
             const currentTime = Math.round(new Date().getTime() / 1000);
             const timeLeft = Math.max(startTime - currentTime, 0);
 
+            if (timeLeft === 0) {
+                this.quiz();
+            }
+
             // console.log(timeLeft);
             Object.keys(this.usersCollection.users).forEach((userId) => {
-                this.io.to(userId).emit(WARM_UP, {
-                    timeLeft,
-                    playersCount: this.quizParticipants.count(),
-                    name: 'Fuck yeah!',
-                    id: '123',
-                    friends: [],
-                });
+                if (!this.quizParticipants.participants[userId]) {
+                    this.io.to(userId).emit(WARM_UP, {
+                        timeLeft,
+                        playersCount: this.quizParticipants.count(),
+                        name: 'Fuck yeah!',
+                        id: '123',
+                        friends: [],
+                    });
+                }
             });
-        }, 200)
+        }, WARM_UP_INTERVAL)
     }
 
+    quiz() {
+        if (this.currentState === WARM_UP) {
+            this.currentState = STATE_QUIZ;
+            this.quizController.start(10);
+        }
+    }
 
 }
 

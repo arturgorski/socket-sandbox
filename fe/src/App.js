@@ -4,7 +4,6 @@ import styles from './App.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Col, Container, Form, FormGroup, Input, Navbar, NavbarBrand, Row } from 'reactstrap';
 
-
 import io from 'socket.io-client';
 
 
@@ -28,20 +27,20 @@ class App extends Component {
 
         this.socket.on('connect', () => {
             console.log('>>> Connected to socket server');
-            // this.socket.emit('setUserId', this.userIdField.current.value);
-
-            this.socket.emit('answer', 'dupaa', function (responseData) {
-                console.log('Callback called with data:', responseData);
-            });
-
         });
 
-        this.socket.on('message', (data, callback) => {
-            console.log('>> New message: ', data);
-            callback('ok');
+        this.socket.on('warmUp', (data) => {
+            console.log('>> New warm up message: ', data);
+        });
+
+        this.socket.on('question', (data) => {
+            console.log('>> New warm up message: ', data);
         });
     };
 
+    join = () => {
+        this.socket.emit('join', {userId: this.userId});
+    };
 
     emit = () => {
         this.socket.emit('message', 'hello friends!');
@@ -68,7 +67,8 @@ class App extends Component {
                                         <Input type="text" name="userId" id="userIdField"
                                                innerRef={this.userIdField} bsSize="lg"/>
                                     </FormGroup>
-                                    <Button size="lg" onClick={this.connect} block>Submit</Button>
+                                    <Button size="lg" onClick={this.connect} block>Connect</Button>
+                                    <Button size="lg" onClick={this.join} block>Join</Button>
                                 </Form>
                             </div>
                         </Col>

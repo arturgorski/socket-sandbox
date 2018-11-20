@@ -4,14 +4,34 @@ const restify = require('restify');
 const UsersCollection = require('./UsersCollection');
 const QuizParticipants = require('./QuizParticipants');
 const StateMachine = require('./StateMachine');
+const QuizController = require('./QuizController');
+const QuizRank = require('./QuizRank');
+
+const users = [
+    'Artur',
+    'Marcin',
+    'Jadwiga',
+    'Jakub',
+    'Gabrysia',
+    'Adrian',
+    'Jarosław',
+    'Zenon',
+    'Ryszard',
+    'Ryszarda'
+];
 
 const uc = new UsersCollection();
 const qp = new QuizParticipants();
-const sm = new StateMachine(io, uc, qp);
+const qc = new QuizController(io);
+const sm = new StateMachine(io, uc, qp, qc);
+const qr = new QuizRank();
+
+let index = 0;
 
 io.on('connection', function (socket) {
-    console.log(socket.id, socket.handshake.query);
+    console.log('User connected:', socket.id, socket.handshake.query);
     const { userId } = socket.handshake.query;
+    const userName = users[index++];
     const connectionId = socket.id;
 
     uc.connect(userId, connectionId, 'name');
@@ -19,35 +39,30 @@ io.on('connection', function (socket) {
 
     socket.on('disconnect', () => {
         uc.disconnect(userId, connectionId);
+        if (!uc.isConnected(userId)) {
+            qp.leave(userId);
+        }
     });
+
+    socket.on('join', () => {
+        qp.join(userId);
+    });
+
+    socket.on('answer', (data) => {
+        console.log('Got answer: ', data);
+        qr.validAnswer(userId, userName, 1, data.answeredTime);
+        console.log(qr.getResults());
+    })
 });
-
-
-function respond(req, res, next) {
-    io.emit('message', req.params.name);
-    res.send('ok');
-    next();
-}
-
-function respond2(req, res, next) {
-    io.to(req.params.name).emit('message', req.params.message, function (responseData) {
-        console.log('Callback called with data:', responseData);
-    });
-
-    res.send('ok');
-    next();
-}
 
 const server = restify.createServer();
 server.get('/warmup/:delay', (req, res, next) => {
-    console.log('Set to warmup', req.params);
+    console.log('Set to warmup: ', req.params);
     sm.warmup(req.params.delay || 60);
 
     res.send('ok');
     next();
 });
-
-server.get('/ping/:name/:message', respond2);
 
 server.listen(8080, () => {
     console.log('%s listening at %s', server.name, server.url);
