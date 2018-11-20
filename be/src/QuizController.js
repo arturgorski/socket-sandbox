@@ -1,8 +1,9 @@
 const { QUESTION } = require('./messages');
 
 class QuizController {
-    constructor(io) {
+    constructor(io, qp) {
         this.io = io;
+        this.quizParticipants = qp;
         this.nextQuestion = null;
         this.questions = [{
             question: 'Which team plays league matches at the Veltins Arena stadium?\n',
@@ -117,7 +118,10 @@ class QuizController {
         console.log('Sending question with Id: ', this.nextQuestion);
         console.log('Question data: ', question);
 
-        this.io.emit(QUESTION, question);
+        Object.keys(this.quizParticipants.participants).forEach(userId => {
+            this.io.to(userId).emit(QUESTION, question);
+        });
+
         this.nextQuestion++;
 
         setTimeout(() => {

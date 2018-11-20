@@ -22,11 +22,18 @@ const users = [
 
 const uc = new UsersCollection();
 const qp = new QuizParticipants();
-const qc = new QuizController(io);
+const qc = new QuizController(io, qp);
 const qr = new QuizRank();
 const sm = new StateMachine(io, uc, qp, qc, qr);
 
 let index = 0;
+
+qr.validAnswer('a', 'Artur', 1, 2220);
+qr.validAnswer('a', 'Artur', 1, 3000);
+qr.validAnswer('d', 'Jakub', 1, 2220);
+qr.validAnswer('d', 'Jakub', 1, 1000);
+qr.validAnswer('e', 'JJ', 1, 2220);
+qr.validAnswer('e', 'JJ', 1, 1500);
 
 io.on('connection', function (socket) {
     console.log('User connected:', socket.id, socket.handshake.query);
