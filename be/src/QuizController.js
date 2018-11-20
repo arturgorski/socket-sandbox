@@ -112,6 +112,9 @@ class QuizController {
         question.total = this.questions.length;
         question.timeForAnswer = timePerQuestionSeconds;
 
+        console.log('Sending question with Id: ', this.nextQuestion);
+        console.log('Question data: ', question);
+
         this.io.emit(QUESTION, question);
         this.nextQuestion++;
 
