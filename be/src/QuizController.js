@@ -22,11 +22,11 @@ class QuizController {
         }, {
             question: 'In which year, the current Netherlands coach Ronald Koeman won the gold medal of the European Championship together with the Netherland national team?',
             answers: [{
-                answer: '1988',
-                isCorrect: true,
-            }, {
                 answer: '1984',
                 isCorrect: false,
+            }, {
+                answer: '1988',
+                isCorrect: true,
             }, {
                 answer: '1992',
                 isCorrect: false,
@@ -53,10 +53,10 @@ class QuizController {
             question: 'German national team played 12 times at the European Championships. How many times did she win the gold medal in this tournament?',
             answers: [{
                 answer: '1',
-                isCorrect: true,
+                isCorrect: false,
             }, {
                 answer: '3',
-                isCorrect: false,
+                isCorrect: true,
             }, {
                 answer: '4',
                 isCorrect: false,
@@ -65,33 +65,33 @@ class QuizController {
                 isCorrect: false,
             }]
         }, {
-            question: 'In which year, the current Netherlands coach Ronald Koeman won the gold medal of the European Championship together with the Netherland national team?',
+            question: 'How else do they call the Netherlands team?',
             answers: [{
-                answer: '1988',
+                answer: 'Oranje',
                 isCorrect: true,
             }, {
-                answer: '1984',
+                answer: 'Gell',
                 isCorrect: false,
             }, {
-                answer: '1992',
+                answer: 'Blauw',
                 isCorrect: false,
             }, {
-                answer: '1996',
+                answer: 'Groen',
                 isCorrect: false,
             }]
         }, {
-            question: 'In which year, the current Netherlands coach Ronald Koeman won the gold medal of the European Championship together with the Netherland national team?',
+            question: 'Germany\'s national team met with the Netherlands team in the European Championships 5 times. How many times won?',
             answers: [{
-                answer: '1988',
+                answer: '1',
+                isCorrect: false,
+            }, {
+                answer: '2',
                 isCorrect: true,
             }, {
-                answer: '1984',
+                answer: '3',
                 isCorrect: false,
             }, {
-                answer: '1992',
-                isCorrect: false,
-            }, {
-                answer: '1996',
+                answer: '5',
                 isCorrect: false,
             }]
         }]
