@@ -1,6 +1,6 @@
 class UsersCollection {
     constructor() {
-        this.users = {}
+        this.users = {};
         this.connectedUsers = 0;
     }
 
