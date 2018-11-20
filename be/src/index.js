@@ -38,6 +38,8 @@ io.on('connection', function (socket) {
     socket.join(userId);
 
     socket.on('disconnect', () => {
+        console.log('User disconnected: ', userId);
+
         uc.disconnect(userId, connectionId);
         if (!uc.isConnected(userId)) {
             qp.leave(userId);
