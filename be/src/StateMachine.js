@@ -1,10 +1,9 @@
 const { WARM_UP } = require('./messages');
-const QuizController = require('./QuizController');
 
 const STATE_WARM_UP = 'warmUp';
 const STATE_QUIZ = 'quiz';
 const WARM_UP_INTERVAL = 200;
-
+const QUESTION_TIMEOUT_SECONDS = 10;
 
 class StateMachine {
     constructor(io, uc, qp, qc) {
@@ -23,7 +22,7 @@ class StateMachine {
 
         this.warmupTimer = setInterval(() => {
             const currentTime = Math.round(new Date().getTime() / 1000);
-            const timeLeft = Math.max(startTime - currentTime, 0);
+            const timeLeft = currentTime - startTime;
 
             if (timeLeft === 0) {
                 this.quiz();
@@ -47,7 +46,7 @@ class StateMachine {
     quiz() {
         if (this.currentState === WARM_UP) {
             this.currentState = STATE_QUIZ;
-            this.quizController.start(10);
+            this.quizController.start(QUESTION_TIMEOUT_SECONDS);
         }
     }
 
