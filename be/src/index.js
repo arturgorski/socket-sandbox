@@ -55,6 +55,7 @@ io.on('connection', function (socket) {
 
     socket.on('join', () => {
         qp.join(userId);
+        qr.validAnswer(userId, userName, 0, 0);
     });
 
     socket.on('answer', (data) => {
