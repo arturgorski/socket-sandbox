@@ -1,24 +1,13 @@
 const io = require('socket.io')(80);
 const restify = require('restify');
 
+const { getUserName } = require('./users');
+
 const UsersCollection = require('./UsersCollection');
 const QuizParticipants = require('./QuizParticipants');
 const StateMachine = require('./StateMachine');
 const QuizController = require('./QuizController');
 const QuizRank = require('./QuizRank');
-
-const users = [
-    'Artur',
-    'Marcin',
-    'Jadwiga',
-    'Jakub',
-    'Gabrysia',
-    'Adrian',
-    'Jarosław',
-    'Zenon',
-    'Ryszard',
-    'Ryszarda'
-];
 
 const uc = new UsersCollection();
 const qp = new QuizParticipants();
@@ -28,17 +17,10 @@ const sm = new StateMachine(io, uc, qp, qc, qr);
 
 let index = 0;
 
-qr.validAnswer('a', 'Artur', 1, 2220);
-qr.validAnswer('a', 'Artur', 1, 3000);
-qr.validAnswer('d', 'Jakub', 1, 2220);
-qr.validAnswer('d', 'Jakub', 1, 1000);
-qr.validAnswer('e', 'JJ', 1, 2220);
-qr.validAnswer('e', 'JJ', 1, 1500);
-
 io.on('connection', function (socket) {
     console.log('User connected:', socket.id, socket.handshake.query);
     const { userId } = socket.handshake.query;
-    const userName = users[index++];
+    const userName = getUserName(userId);
     const connectionId = socket.id;
 
     uc.connect(userId, connectionId, userName);

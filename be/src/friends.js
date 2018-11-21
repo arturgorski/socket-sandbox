@@ -1,5 +1,5 @@
 module.exports = [
-    'a',
+    'tv-waldek',
     'Ext-08853624',
     'd',
 ];
