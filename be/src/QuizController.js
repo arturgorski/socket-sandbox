@@ -6,7 +6,7 @@ class QuizController {
         this.quizParticipants = qp;
         this.nextQuestion = null;
         this.questions = [{
-            question: 'Which team plays league matches at the Veltins Arena stadium?\n',
+            question: 'Which team plays their home games at Veltins Arena?',
             answers: [{
                 answer: 'FC Schalke 04',
                 isCorrect: true,
@@ -21,7 +21,7 @@ class QuizController {
                 isCorrect: false,
             }]
         }, {
-            question: 'In which year, the current Netherlands coach Ronald Koeman won the gold medal of the European Championship together with the Netherland national team?',
+            question: 'Which year did the Netherlands coach Ronald Koeman win a gold medal at the European Championship?',
             answers: [{
                 answer: '1984',
                 isCorrect: false,
@@ -36,7 +36,7 @@ class QuizController {
                 isCorrect: false,
             }]
         }, {
-            question: 'In what position did the current German coach Joachim Loew play in the German national team?\n',
+            question: 'Which position did the German coach Joachim Loew play at in the German national team?',
             answers: [{
                 answer: 'Defender',
                 isCorrect: false,
@@ -47,11 +47,11 @@ class QuizController {
                 answer: 'Striker',
                 isCorrect: false,
             }, {
-                answer: 'He didn’t play in the senior national team',
+                answer: 'He never played for the senior national team',
                 isCorrect: true,
             }]
         }, {
-            question: 'German national team played 12 times at the European Championships. How many times did she win the gold medal in this tournament?',
+            question: 'The German national team played 12 times at the European Championships. How many times did they win a gold medal in this tournament?',
             answers: [{
                 answer: '1',
                 isCorrect: false,
@@ -66,7 +66,7 @@ class QuizController {
                 isCorrect: false,
             }]
         }, /* {
-            question: 'How else do they call the Netherlands team?',
+            question: 'How is the Netherlands national team usually referred to as?',
             answers: [{
                 answer: 'Oranje',
                 isCorrect: true,
@@ -81,7 +81,7 @@ class QuizController {
                 isCorrect: false,
             }]
         }, {
-            question: 'Germany\'s national team met with the Netherlands team in the European Championships 5 times. How many times won?',
+            question: 'The Germany national team played with the Netherlands team in the European Championships 5 times. How many times did Germany win?',
             answers: [{
                 answer: '1',
                 isCorrect: false,
