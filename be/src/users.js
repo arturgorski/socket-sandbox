@@ -14,12 +14,12 @@ const randomUsers = [
 
 const definedUsers = {
     'tv-waldek': 'Waldek',
+    'tv-chuck': 'Chuck',
     'Ext-08853624': 'Kuba',
     'd': 'John',
 };
 
 let index = 0;
-
 
 const getUserName = (userId) => {
     const username = definedUsers[userId];
