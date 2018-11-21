@@ -57,7 +57,7 @@ class StateMachine {
                     this.io.to(userId).emit(WARM_UP, {
                         timeLeft,
                         playersCount: this.quizParticipants.count(),
-                        name: 'Fuck yeah!',
+                        name: 'Germany v Netherlands',
                         id: '123',
                         friends: friendsList,
                     });
