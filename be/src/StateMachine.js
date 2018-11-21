@@ -21,6 +21,7 @@ class StateMachine {
     warmup(delaySeconds) {
         this.quizRank.reset();
         this.quizParticipants.reset();
+        this.quizController.reset();
 
         this.currentState = STATE_WARM_UP;
         const startTime = Math.round(new Date().getTime() / 1000) + parseInt(delaySeconds, 10);
@@ -28,6 +29,8 @@ class StateMachine {
         clearInterval(this.warmupTimer);
 
         this.warmupTimer = setInterval(() => {
+            console.log('Send warm up message with delay: ', delaySeconds);
+
             const currentTime = Math.round(new Date().getTime() / 1000);
             const timeLeft = currentTime - startTime;
 
@@ -63,8 +66,9 @@ class StateMachine {
     }
 
     quiz() {
-        if (this.currentState === WARM_UP) {
+        if (this.currentState === STATE_WARM_UP) {
             this.currentState = STATE_QUIZ;
+
             this.quizController.start(QUESTION_TIMEOUT_SECONDS, () => {
                 clearInterval(this.warmupTimer);
                 this.currentState = STATE_QUIZ_ENDED;

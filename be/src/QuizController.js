@@ -99,6 +99,10 @@ class QuizController {
         ]
     }
 
+    reset() {
+        clearTimeout(this.timer);
+    }
+
     start(timePerQuestionSeconds, onQuizEnd) {
         this.nextQuestion = 0;
         this.next(timePerQuestionSeconds, onQuizEnd);
@@ -124,7 +128,7 @@ class QuizController {
 
         this.nextQuestion++;
 
-        setTimeout(() => {
+        this.timer = setTimeout(() => {
             this.next(timePerQuestionSeconds, onQuizEnd);
         }, (timePerQuestionSeconds + 1) * 1000);
     }
