@@ -35,7 +35,7 @@ class QuizController {
                 answer: '1996',
                 isCorrect: false,
             }]
-        }, /*{
+        }, {
             question: 'In what position did the current German coach Joachim Loew play in the German national team?\n',
             answers: [{
                 answer: 'Defender',
@@ -65,7 +65,7 @@ class QuizController {
                 answer: '7',
                 isCorrect: false,
             }]
-        }, {
+        }, /* {
             question: 'How else do they call the Netherlands team?',
             answers: [{
                 answer: 'Oranje',
