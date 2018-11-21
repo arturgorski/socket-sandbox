@@ -6,7 +6,7 @@ const STATE_WARM_UP = 'warmUp';
 const STATE_QUIZ = 'quiz';
 const STATE_QUIZ_ENDED = 'quiz_ended';
 const WARM_UP_INTERVAL = 1000;
-const QUESTION_TIMEOUT_SECONDS = 10;
+const QUESTION_TIMEOUT_SECONDS = 15;
 
 class StateMachine {
     constructor(io, uc, qp, qc, qr) {
